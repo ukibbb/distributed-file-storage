@@ -25,6 +25,8 @@ func TestStore(t *testing.T) {
 	s := newStore()
 	id := generateID()
 
+	defer tearDown(t, s)
+
 	for i := 0; i < 50; i++ {
 		key := fmt.Sprintf("foo_%d", i)
 		data := []byte("Some test file data.")
@@ -41,4 +43,10 @@ func newStore() *Store {
 		PathTransformFunc: CASPathTransform,
 	}
 	return NewStore(opts)
+}
+
+func tearDown(t *testing.T, s *Store) {
+	if err := s.Clear(); err != nil {
+		t.Error(err)
+	}
 }

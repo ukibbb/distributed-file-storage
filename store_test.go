@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"testing"
 )
 
@@ -33,6 +34,26 @@ func TestStore(t *testing.T) {
 
 		if _, err := s.writeStream(id, key, bytes.NewReader(data)); err != nil {
 			t.Error(err)
+		}
+
+		if ok := s.Has(id, key); !ok {
+			t.Errorf("expected to have key %s", key)
+		}
+
+		_, r, err := s.Read(id, key)
+		if err != nil {
+			t.Error(err)
+		}
+		b, _ := io.ReadAll(r)
+		if string(b) != string(data) {
+			t.Errorf("want %s have %s", data, b)
+		}
+		if err := s.Delete(id, key); err != nil {
+			t.Error(err)
+		}
+
+		if ok := s.Has(id, key); ok {
+			t.Errorf("expected to NOT have key %s", key)
 		}
 
 	}

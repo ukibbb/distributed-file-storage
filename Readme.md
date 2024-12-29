@@ -65,5 +65,3 @@ Encapsulates peer-to-peer transport, file handling, and encryption.
 Uses TCP for peer connections.
 
 Implements message broadcasting and secure data streaming.
-
-#### Encryption and Decryption

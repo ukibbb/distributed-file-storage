@@ -44,7 +44,7 @@ This project implements a high-performance, content-addressable storage system i
 
    ```
 
-   File Server Architecture
+# File Server Architecture
 
 ### Components
 
